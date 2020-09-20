@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+
+  service1:
+    build:
+      context: ./src/service1
+      dockerfile: ./src/service1/Dockerfile
+    image: srvc1
+    command: npm start
+    ports:
+      - "8001:81"
+    depends_on:
+      - service2
+
+  service2:
+    build:
+      context: ./src/service2
+      dockerfile: ./src/service2/Dockerfile
+    image: srvc2
+    command: npm start
+    ports:
+      - "8002:82"

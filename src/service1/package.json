@@ -1,0 +1,10 @@
+{
+  "name": "service_1",
+  "version": "1.0.0",
+  "description": "Node Web Service 1",
+  "author": "TB",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  }
+}

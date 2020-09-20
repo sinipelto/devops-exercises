@@ -1,0 +1,14 @@
+from http.server import BaseHTTPRequestHandler
+import socketserver
+
+PORT = 81
+
+class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b'Hello World!')
+
+with socketserver.TCPServer(("", PORT), SimpleHTTPRequestHandler) as httpd:
+    print("Service 2 running at http://" + str(httpd.server_address[0]) + ":" + str(httpd.server_address[1]))
+    httpd.serve_forever()
