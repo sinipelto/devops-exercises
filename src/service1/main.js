@@ -2,14 +2,15 @@ const express = require('express');
 const request = require('request');
 
 const app = express();
-const port = 81;
-const dest = 82;
+
+const srcPort = 81;
+const destPort = 82;
 
 app.get('/', (req, res) => {
     console.log("Received GET 1");
     console.log("Sending GET 2");
 
-    request.get("http://localhost:" + dest + "/")
+    request.get("http://service2:" + destPort + "/")
         .on('response', (resp) => {
             console.log("Response OK from GET 2");
             let data = "";
@@ -37,6 +38,6 @@ app.get('/', (req, res) => {
         });
 });
 
-app.listen(port, () => {
-    console.log(`Service 1 running at http://localhost:${port}`)
+app.listen(srcPort, () => {
+    console.log(`Service 1 running at http://localhost:${srcPort}`)
 });
