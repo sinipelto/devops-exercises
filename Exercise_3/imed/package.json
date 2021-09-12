@@ -1,0 +1,22 @@
+{
+  "name": "intermediate",
+  "version": "1.0.0",
+  "description": "The Intermediate Service",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "imed",
+    "intermediate",
+    "docker",
+    "docker-compose"
+  ],
+  "author": "Sinipelto",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.6.0",
+    "wait-forever": "^1.0.0"
+  }
+}

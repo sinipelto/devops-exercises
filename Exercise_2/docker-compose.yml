@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+
+  service1:
+    build:
+      context: src/service1
+      dockerfile: Dockerfile
+    image: srvc1
+    command: npm start
+    ports:
+      - "8001:81"
+    depends_on:
+      - service2
+    networks:
+      - servnet
+
+  service2:
+    build:
+      context: src/service2
+      dockerfile: Dockerfile
+    image: srvc2
+    command: npm start
+    expose:
+      - "82"
+    networks:
+      - servnet
+
+networks:
+  servnet:

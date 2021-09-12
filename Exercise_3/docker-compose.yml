@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  orig:
+    build:
+      context: orig
+      dockerfile: Dockerfile
+    image: orig-img
+    command: ["/shared/wait-for-it.sh", "rabbit:5672", "--",  "python3", "main.py"]
+    environment:
+      - APP_ENV=PRODUCTION
+    depends_on:
+      - rabbit
+      - imed
+      - obse
+      - tools
+    volumes:
+      - sharevol:/shared:ro
+    networks:
+      - rabbitnet
+
+  imed:
+    build:
+      context: imed
+      dockerfile: Dockerfile
+    image: imed-img
+    command: ["/shared/wait-for-it.sh", "rabbit:5672", "--",  "npm", "start"]
+    environment:
+      - APP_ENV=PRODUCTION
+    depends_on:
+      - rabbit
+      - obse
+      - tools
+    volumes:
+      - sharevol:/shared:ro
+    networks:
+      - rabbitnet
+
+  obse:
+    build:
+      context: obse
+      dockerfile: Dockerfile
+    image: obse-img
+    command: ["/shared/wait-for-it.sh", "rabbit:5672", "--",  "dotnet", "Observer.Worker.dll"]
+    depends_on:
+      - rabbit
+      - tools
+    volumes:
+      - vol:/data:rw
+      - sharevol:/shared:ro
+    networks:
+      - rabbitnet
+
+  httpserv:
+    build:
+      context: httpserv
+      dockerfile: Dockerfile
+    image: serv-img
+    command: ["./build/server", "81"]
+    depends_on:
+      - orig
+      - imed
+      - obse
+    environment:
+      - CPP_ENV=PRODUCTION
+      - SERVER_PORT=81
+    ports:
+      - 8080:81
+    volumes:
+      - vol:/data:ro
+
+  rabbit:
+    image: rabbitmq:3-alpine
+    networks:
+      - rabbitnet
+
+  tools:
+    build:
+      context: ./tools
+      dockerfile: Dockerfile
+    image: tools-img
+    volumes:
+      - sharevol:/shared:rw
+
+networks:
+  rabbitnet:
+
+volumes:
+  vol:
+  sharevol:

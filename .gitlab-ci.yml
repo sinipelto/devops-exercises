@@ -1,0 +1,17 @@
+image: tmaier/docker-compose:latest
+
+services:
+  - docker:dind
+
+# At this point,  ensure docker & compose are ready
+before_script:
+  - docker info
+  - docker-compose --version
+
+# Build and run the containers
+build_run:
+  stage: build
+  script:
+    - cd Exercise_3/
+    - docker-compose build --no-cache
+    - timeout 80 docker-compose up
