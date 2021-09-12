@@ -1,2 +1,2 @@
-# devops-ex2
-Repo for Devops course exercise 2
+# devops-exercises
+Repository for COMP.SE.140 Continuous Development and Deployment course exercises.
