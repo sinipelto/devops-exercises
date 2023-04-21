@@ -16,7 +16,7 @@
   "author": "Sinipelto",
   "license": "ISC",
   "dependencies": {
-    "amqplib": "^0.6.0",
+    "amqplib": "^0.10.3",
     "wait-forever": "^1.0.0"
   }
 }
